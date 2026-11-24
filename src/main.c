@@ -79,13 +79,16 @@ WinState check_win_state(const char board[BOARD_SIZE][BOARD_SIZE], const PlayerD
 		else if (player2.turn_index == 0)
 			state = state_player2_win;
 	}
-
-	if (o_row_1 || o_row_2 || o_row_3 || o_col_1 || o_col_2 || o_col_3 || o_diag_tlbr || o_diag_trbl)
+	else if (o_row_1 || o_row_2 || o_row_3 || o_col_1 || o_col_2 || o_col_3 || o_diag_tlbr || o_diag_trbl)
 	{
 		if (player1.turn_index == 1)
 			state = state_player1_win;
 		else if (player2.turn_index == 1)
 			state = state_player2_win;
+	}
+	else
+	{
+		state = state_none;
 	}
 
 	return state;
@@ -313,7 +316,7 @@ int main()
 {
 	_Bool game_loop = true;
 
-	unsigned int turn = 0;
+	unsigned int turn = 1;
 
 	char board[BOARD_SIZE][BOARD_SIZE];
 	initialize_board(board);
@@ -357,13 +360,15 @@ int main()
 			break;
 			
 		case state_none:
+			turn++;
+			break;
 		default:
 			break;
 		}
 
 		if (current_state == state_player1_win || current_state == state_player2_win || current_state == state_draw)
 		{
-			turn = 0;
+			turn = 1;
 			initialize_board(board);
 
 			game_loop = get_rematch();
