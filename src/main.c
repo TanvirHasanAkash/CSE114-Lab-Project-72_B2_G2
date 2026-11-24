@@ -86,7 +86,10 @@ WinState check_win_state(const char board[BOARD_SIZE][BOARD_SIZE], const PlayerD
 	return state;
 }
 
-void mark(const BoardInputData input);
+void mark(char board[BOARD_SIZE][BOARD_SIZE], const BoardInputData input)
+{
+	board[input.pos_row - 1][input.pos_col - 1] = input.mark;
+}
 
 void print_game_name()
 {
@@ -148,7 +151,7 @@ int main()
 	do {
 		print_msg_current_turn(player1, player2, turn);
 		print_board();
-		mark(take_board_input());
+		mark(board, take_board_input());
 
 		WinState current_state = check_win_state(board, player1, player2);
 
