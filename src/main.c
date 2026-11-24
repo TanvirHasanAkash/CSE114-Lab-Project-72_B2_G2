@@ -128,11 +128,11 @@ void print_msg_current_turn(const PlayerData player1, const PlayerData player2, 
 	switch (turn % 2)
 	{
 	case 0:
-		printf("It's %s's (%c) turn!", turn_player_data.name, marked_o);
+		printf("It's %s's (%c) turn!\n", turn_player_data.name, marked_o);
 		break;
 
 	case 1:
-		printf("It's %s's (%c) turn!", turn_player_data.name, marked_x);
+		printf("It's %s's (%c) turn!\n", turn_player_data.name, marked_x);
 		break;
 	}
 }
