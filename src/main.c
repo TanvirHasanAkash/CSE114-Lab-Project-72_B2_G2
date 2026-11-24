@@ -51,7 +51,11 @@ void print_msg_current_score(const PlayerData player1, const PlayerData player2)
 void print_msg_invalid_input();
 void print_msg_current_turn(const PlayerData player1, const PlayerData player2, const unsigned int turn);
 void print_msg_win_state(const PlayerData player);
-void print_msg_draw_state();
+
+void print_msg_draw_state()
+{
+	printf("The game was a draw.\n");
+}
 
 void print_board();
 
