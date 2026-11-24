@@ -187,7 +187,73 @@ void print_board(const char board[BOARD_SIZE][BOARD_SIZE])
 	}
 }
 
-BoardInputData take_board_input();
+BoardInputData take_board_input(unsigned int turn)
+{
+	BoardInputData data;
+
+	char input[64];
+
+	_Bool is_valid = false;
+
+	do
+	{
+		printf("> ");
+
+		if (!fgets(input, sizeof(input), stdin))
+		{
+			print_msg_invalid_input();
+			continue;
+		}
+
+		input[63] = '\0';
+		size_t input_length = strlen(input);
+
+		if (input_length != 3)
+		{
+			print_msg_invalid_input();
+			continue;
+		}
+
+		if ('a' <= input[0] && input[0] <= 'c')
+		{
+			data.pos_col = (short) (input[0] - 'a' + 1);
+		}
+		else if ('A' <= input[0] && input[0] <= 'C')
+		{
+			data.pos_col = (short) (input[0] - 'A' + 1);
+		}
+		else
+		{
+			print_msg_invalid_input();
+			continue;
+		}
+
+		if ('1' <= input[1] && input[1] <= '3')
+		{
+			data.pos_row = (short) (input[1] - '1' + 1);
+		}
+		else
+		{
+			print_msg_invalid_input();
+			continue;
+		}
+
+		switch (turn % 2)
+		{
+		case 0:
+			data.mark = marked_o;
+			break;
+
+		case 1:
+			data.mark = marked_x;
+			break;
+		}
+
+		is_valid = true;
+	} while (!is_valid);
+
+	return data;
+}
 
 void get_player_name(PlayerData *player_data)
 {
@@ -242,7 +308,7 @@ int main()
 	do {
 		print_msg_current_turn(player1, player2, turn);
 		print_board(board);
-		mark(board, take_board_input());
+		mark(board, take_board_input(turn));
 
 		WinState current_state = check_win_state(board, player1, player2);
 
