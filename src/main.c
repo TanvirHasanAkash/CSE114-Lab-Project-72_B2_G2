@@ -104,7 +104,7 @@ void print_game_name()
 
 void print_msg_current_score(const PlayerData player1, const PlayerData player2)
 {
-	printf("%s (%.1f)\tvs\t%s (%.1f)",
+	printf("%s (%.1f)\tvs\t%s (%.1f)\n",
 		player1.name, player1.score,
 		player2.name, player2.score
 	);
