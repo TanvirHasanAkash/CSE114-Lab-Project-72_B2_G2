@@ -93,10 +93,21 @@ void print_game_name()
 	printf("===========\n");
 }
 
-void print_msg_current_score(const PlayerData player1, const PlayerData player2);
+void print_msg_current_score(const PlayerData player1, const PlayerData player2)
+{
+	printf("%s (%.1f)\tvs\t%s (%.1f)",
+		player1.name, player1.score,
+		player2.name, player2.score
+	);
+}
+
 void print_msg_invalid_input();
 void print_msg_current_turn(const PlayerData player1, const PlayerData player2, const unsigned int turn);
-void print_msg_win_state(const PlayerData player);
+
+void print_msg_win_state(const PlayerData player)
+{
+	printf("%s is the winner.\n", player.name);
+}
 
 void print_msg_draw_state()
 {
