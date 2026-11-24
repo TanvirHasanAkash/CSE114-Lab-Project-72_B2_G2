@@ -115,7 +115,27 @@ void print_msg_invalid_input()
 	printf("Invalid Input! Please enter a valid row (1-3) and column (A-C).\n");
 }
 
-void print_msg_current_turn(const PlayerData player1, const PlayerData player2, const unsigned int turn);
+void print_msg_current_turn(const PlayerData player1, const PlayerData player2, const unsigned int turn)
+{
+	PlayerData turn_player_data;
+	const short turn_index = (turn + 1) % 2;
+
+	if (player1.turn_index == turn_index)
+		turn_player_data = player1;
+	else if (player2.turn_index == turn_index)
+		turn_player_data = player2;
+	
+	switch (turn % 2)
+	{
+	case 0:
+		printf("It's %s's (%c) turn!", turn_player_data.name, marked_o);
+		break;
+
+	case 1:
+		printf("It's %s's (%c) turn!", turn_player_data.name, marked_x);
+		break;
+	}
+}
 
 void print_msg_win_state(const PlayerData player)
 {
