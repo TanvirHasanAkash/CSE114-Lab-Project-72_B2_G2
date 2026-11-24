@@ -69,7 +69,14 @@ void print_msg_draw_state()
 void print_board();
 
 BoardInputData take_board_input();
-void get_player_name(PlayerData *player_data);
+
+void get_player_name(PlayerData *player_data)
+{
+	printf("Enter Player-%d's name: ", player_data->name);
+	fgets(player_data->name, sizeof(player_data->name), stdin);
+	player_data->name[strcspn(player_data->name, "\n")] = '\0';
+}
+
 _Bool get_rematch();
 
 
