@@ -122,7 +122,65 @@ void print_msg_draw_state()
 	printf("The game was a draw.\n");
 }
 
-void print_board();
+void print_board(const char board[BOARD_SIZE][BOARD_SIZE])
+{
+	char print[11][11] = {
+		{ ' ', ' ', ' ', '|', ' ', ' ', ' ', '|', ' ', ' ', ' ' },
+		{ ' ', ' ', ' ', '|', ' ', ' ', ' ', '|', ' ', ' ', ' ' },
+		{ ' ', ' ', ' ', '|', ' ', ' ', ' ', '|', ' ', ' ', ' ' },
+		{ '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-' },
+		{ ' ', ' ', ' ', '|', ' ', ' ', ' ', '|', ' ', ' ', ' ' },
+		{ ' ', ' ', ' ', '|', ' ', ' ', ' ', '|', ' ', ' ', ' ' },
+		{ ' ', ' ', ' ', '|', ' ', ' ', ' ', '|', ' ', ' ', ' ' },
+		{ '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-' },
+		{ ' ', ' ', ' ', '|', ' ', ' ', ' ', '|', ' ', ' ', ' ' },
+		{ ' ', ' ', ' ', '|', ' ', ' ', ' ', '|', ' ', ' ', ' ' },
+		{ ' ', ' ', ' ', '|', ' ', ' ', ' ', '|', ' ', ' ', ' ' }
+	};
+
+	for (size_t i = 0; i < BOARD_SIZE; i++)
+	{
+		for (size_t j = 0; j < BOARD_SIZE; j++)
+		{
+			const size_t pos_tl_i = i * 4;
+			const size_t pos_tl_j = j * 4;
+
+			switch (board[i][j])
+			{
+			case marked_x:
+				print[pos_tl_i + 0][pos_tl_j + 0] = marked_x;
+				print[pos_tl_i + 0][pos_tl_j + 2] = marked_x;
+				print[pos_tl_i + 1][pos_tl_j + 1] = marked_x;
+				print[pos_tl_i + 2][pos_tl_j + 0] = marked_x;
+				print[pos_tl_i + 2][pos_tl_j + 2] = marked_x;
+				break;
+
+			case marked_o:
+				print[pos_tl_i + 0][pos_tl_j + 1] = marked_o;
+				print[pos_tl_i + 1][pos_tl_j + 0] = marked_o;
+				print[pos_tl_i + 1][pos_tl_j + 2] = marked_o;
+				print[pos_tl_i + 2][pos_tl_j + 1] = marked_o;
+				break;
+
+			case unmakred:
+			default:
+				break;
+			}
+		}
+	}
+
+	for (size_t i = 0; i < 11; i++)
+	{
+		for (size_t j = 0; j < 11; j++)
+		{
+			putchar(' ');
+			putchar(print[i][j]);
+			putchar(' ');
+		}
+
+		putchar('\n');
+	}
+}
 
 BoardInputData take_board_input();
 
@@ -154,7 +212,7 @@ int main()
 
 	do {
 		print_msg_current_turn(player1, player2, turn);
-		print_board();
+		print_board(board);
 		mark(board, take_board_input());
 
 		WinState current_state = check_win_state(board, player1, player2);
