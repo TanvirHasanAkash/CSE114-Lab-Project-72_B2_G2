@@ -196,7 +196,31 @@ void get_player_name(PlayerData *player_data)
 	player_data->name[strcspn(player_data->name, "\n")] = '\0';
 }
 
-_Bool get_rematch();
+_Bool get_rematch()
+{
+	char choice[64];
+
+	while (true)
+	{
+		printf("Want to rematch? (Y/N)\n> ");
+		
+		if (!fgets(choice, sizeof(choice), stdin))
+			return false;
+		
+		choice[63] = '\0';
+		size_t input_length = strlen(choice);
+
+		if (input_length == 2)
+		{
+			if (choice[0] == 'Y' || choice[0] == 'y')
+				return true;
+			if (choice[0] == 'N' || choice[0] == 'n')
+				return false;
+		}
+
+		printf("Invalid input.\n");
+	}
+}
 
 
 int main()
