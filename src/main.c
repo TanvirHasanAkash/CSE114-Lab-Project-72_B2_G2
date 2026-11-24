@@ -35,7 +35,13 @@ typedef struct PlayerData {
 } PlayerData;
 
 
-void initialize_board(char board[BOARD_SIZE][BOARD_SIZE]);
+void initialize_board(char board[BOARD_SIZE][BOARD_SIZE])
+{
+	for (size_t i = 0; i < BOARD_SIZE; i++)
+		for (size_t j = 0; j < BOARD_SIZE; j++)
+			board[i][j] = (char) unmakred;
+}
+
 _Bool is_valid_board_input(const BoardInputData input);
 WinState check_win_state(const char board[BOARD_SIZE][BOARD_SIZE]);
 void mark(const BoardInputData input);
