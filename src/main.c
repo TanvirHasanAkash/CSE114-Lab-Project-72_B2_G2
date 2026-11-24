@@ -46,7 +46,12 @@ _Bool is_valid_board_input(const BoardInputData input);
 WinState check_win_state(const char board[BOARD_SIZE][BOARD_SIZE]);
 void mark(const BoardInputData input);
 
-void print_game_name();
+void print_game_name()
+{
+	printf("Tic-Tac-Toe\n");
+	printf("===========\n");
+}
+
 void print_msg_current_score(const PlayerData player1, const PlayerData player2);
 void print_msg_invalid_input();
 void print_msg_current_turn(const PlayerData player1, const PlayerData player2, const unsigned int turn);
