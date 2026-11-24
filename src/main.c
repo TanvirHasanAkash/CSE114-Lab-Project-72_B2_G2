@@ -43,7 +43,12 @@ void initialize_board(char board[BOARD_SIZE][BOARD_SIZE])
 			board[i][j] = (char) unmakred;
 }
 
-_Bool is_valid_board_input(const BoardInputData input);
+_Bool is_valid_board_input(const BoardInputData input)
+{
+	return
+		(1 <= input.pos_row && input.pos_row <= BOARD_SIZE) &&
+		(1 <= input.pos_col && input.pos_col <= BOARD_SIZE);
+}
 
 WinState check_win_state(const char board[BOARD_SIZE][BOARD_SIZE], const PlayerData player1, const PlayerData player2)
 {
