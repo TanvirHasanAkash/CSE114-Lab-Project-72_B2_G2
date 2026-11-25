@@ -43,6 +43,13 @@ float calculate_player_score(const PlayerData data)
 	return data.wins * SCORE_WIN + data.draws * SCORE_DRAW;
 }
 
+void swap_player_turn_index(PlayerData *player1, PlayerData *player2)
+{
+	player1->turn_index ^= player2->turn_index;
+	player2->turn_index ^= player1->turn_index;
+	player1->turn_index ^= player2->turn_index;
+}
+
 void initialize_board(char board[BOARD_SIZE][BOARD_SIZE])
 {
 	for (size_t i = 0; i < BOARD_SIZE; i++)
@@ -408,6 +415,7 @@ int main()
 		case state_none:
 			turn++;
 			break;
+
 		default:
 			break;
 		}
@@ -420,6 +428,7 @@ int main()
 			match_played++;
 
 			initialize_board(board);
+			swap_player_turn_index(&player1, &player2);
 
 			game_loop = get_rematch();
 		}
