@@ -31,10 +31,17 @@ typedef struct BoardInputData {
 
 typedef struct PlayerData {
 	short turn_index;
-	float score;
+	unsigned int wins;
+	unsigned int draws;
+	unsigned int losses;
 	char name[64];
 } PlayerData;
 
+
+float calculate_player_score(const PlayerData data)
+{
+	return data.wins * SCORE_WIN + data.draws * SCORE_DRAW;
+}
 
 void initialize_board(char board[BOARD_SIZE][BOARD_SIZE])
 {
@@ -108,8 +115,8 @@ void print_game_name()
 void print_msg_current_score(const PlayerData player1, const PlayerData player2)
 {
 	printf("%s (%.1f)\tvs\t%s (%.1f)\n",
-		player1.name, player1.score,
-		player2.name, player2.score
+		player1.name, calculate_player_score(player1),
+		player2.name, calculate_player_score(player2)
 	);
 }
 
@@ -216,6 +223,22 @@ void print_board(const char board[BOARD_SIZE][BOARD_SIZE])
 }
 
 BoardInputData take_board_input(char board[BOARD_SIZE][BOARD_SIZE], unsigned int turn)
+void print_summary(const PlayerData player1, const PlayerData player2, const unsigned int match_played)
+{
+	printf("Game Summary\n");
+	printf("============\n");
+	printf("- Total Match Played: %d\n", match_played);
+	printf(
+		"- %s's point:\n    - Win(s): %u\n    - Draw(s): %u\n    - Loss(s): %u\n    - Total point(s): %.1f\n",
+		player1.name, player1.wins, player1.draws, player1.losses, calculate_player_score(player1)
+	);
+	printf(
+		"- %s's point:\n    - Win(s): %u\n    - Draw(s): %u\n    - Loss(s): %u\n    - Total point(s): %.1f\n",
+		player2.name, player2.wins, player2.draws, player2.losses, calculate_player_score(player2)
+	);
+}
+
+BoardInputData take_board_input(unsigned int turn)
 {
 	BoardInputData data;
 
@@ -329,6 +352,7 @@ int main()
 	_Bool game_loop = true;
 
 	unsigned int turn = 1;
+	unsigned int match_played = 0;
 
 	char board[BOARD_SIZE][BOARD_SIZE];
 	initialize_board(board);
@@ -350,22 +374,24 @@ int main()
 		switch (current_state)
 		{
 		case state_player1_win:
-			player1.score += SCORE_WIN;
+			player1.wins++;
+			player2.losses++;
 
 			print_msg_win_state(player1);
 			print_msg_current_score(player1, player2);
 			break;
 
 		case state_player2_win:
-			player2.score += SCORE_WIN;
+			player2.wins++;
+			player1.losses++;
 
 			print_msg_win_state(player2);
 			print_msg_current_score(player1, player2);
 			break;
 
 		case state_draw:
-			player1.score += SCORE_DRAW;
-			player2.score += SCORE_DRAW;
+			player1.draws++;
+			player2.draws++;
 
 			print_msg_draw_state();
 			print_msg_current_score(player1, player2);
@@ -381,11 +407,15 @@ int main()
 		if (current_state == state_player1_win || current_state == state_player2_win || current_state == state_draw)
 		{
 			turn = 1;
+			match_played++;
+
 			initialize_board(board);
 
 			game_loop = get_rematch();
 		}
 	} while (game_loop);
+
+	print_summary(player1, player2, match_played);
 
 	return 0;
 }
