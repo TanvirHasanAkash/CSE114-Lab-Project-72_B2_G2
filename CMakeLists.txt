@@ -13,8 +13,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/build/$<LOWER_CASE:$<CONFIG>>")
 set(CMAKE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/pdb")
 
-set(CMAKE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/pdb")
-
 
 add_executable(TicTacToe
 	src/main.c
@@ -33,6 +31,13 @@ if(MSVC)
 	)
 	target_link_options(TicTacToe PRIVATE
 		$<$<CONFIG:Release>:/LTCG /OPT:REF /OPT:ICF>
+	)
+elseif(APPLE)
+	target_compile_options(TicTacToe PRIVATE
+		$<$<CONFIG:Release>:-O3 -ffunction-sections -fdata-sections>
+	)
+	target_link_options(TicTacToe PRIVATE
+		$<$<CONFIG:Release>:-Wl,-dead_strip>
 	)
 else()
 	target_compile_options(TicTacToe PRIVATE
