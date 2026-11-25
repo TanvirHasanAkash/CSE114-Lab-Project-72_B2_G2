@@ -95,7 +95,17 @@ WinState check_win_state(const char board[BOARD_SIZE][BOARD_SIZE], const PlayerD
 	}
 	else
 	{
-		state = state_none;
+		_Bool is_draw = true;
+
+		for (size_t i = 0; i < BOARD_SIZE; i++)
+			for (size_t j = 0; j < BOARD_SIZE; j++)
+				if (board[i][j] == unmakred)
+					is_draw = false;
+
+		if (is_draw)
+			state = state_draw;
+		else
+			state = state_none;
 	}
 
 	return state;
