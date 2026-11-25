@@ -379,6 +379,9 @@ int main()
 
 		WinState current_state = check_win_state(board, player1, player2);
 
+		if (current_state != state_none)
+			print_board(board);
+
 		switch (current_state)
 		{
 		case state_player1_win:
@@ -386,7 +389,6 @@ int main()
 			player2.losses++;
 
 			print_msg_win_state(player1);
-			print_msg_current_score(player1, player2);
 			break;
 
 		case state_player2_win:
@@ -394,7 +396,6 @@ int main()
 			player1.losses++;
 
 			print_msg_win_state(player2);
-			print_msg_current_score(player1, player2);
 			break;
 
 		case state_draw:
@@ -402,7 +403,6 @@ int main()
 			player2.draws++;
 
 			print_msg_draw_state();
-			print_msg_current_score(player1, player2);
 			break;
 			
 		case state_none:
@@ -412,8 +412,10 @@ int main()
 			break;
 		}
 
-		if (current_state == state_player1_win || current_state == state_player2_win || current_state == state_draw)
+		if (current_state != state_none)
 		{
+			print_msg_current_score(player1, player2);
+
 			turn = 1;
 			match_played++;
 
