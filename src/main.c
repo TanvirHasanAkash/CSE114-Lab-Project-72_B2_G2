@@ -126,7 +126,7 @@ void mark(char board[BOARD_SIZE][BOARD_SIZE], const BoardInputData input)
 void print_game_name()
 {
 	printf("Tic-Tac-Toe\n");
-	printf("===========\n");
+	printf("===========\n\n");
 }
 
 void print_msg_current_score(const PlayerData player1, const PlayerData player2)
@@ -326,6 +326,8 @@ BoardInputData take_board_input(char board[BOARD_SIZE][BOARD_SIZE], const unsign
 		is_valid = true;
 	} while (!is_valid);
 
+	putchar('\n');
+
 	return data;
 }
 
@@ -353,12 +355,19 @@ _Bool get_rematch()
 		if (input_length == 2)
 		{
 			if (choice[0] == 'Y' || choice[0] == 'y')
+			{
+				putchar('\n');
 				return true;
+			}
 			if (choice[0] == 'N' || choice[0] == 'n')
+			{
+				putchar('\n');
 				return false;
+			}
 		}
 
 		printf("Invalid input.\n");
+		putchar('\n');
 	}
 }
 
@@ -379,6 +388,7 @@ int main()
 	PlayerData player2 = { .turn_index = 1 };
 	get_player_name(&player1);
 	get_player_name(&player2);
+	putchar('\n');
 
 	do {
 		print_msg_current_turn(player1, player2, turn);
@@ -395,14 +405,14 @@ int main()
 		case state_player1_win:
 			player1.wins++;
 			player2.losses++;
-
+			putchar('\n');
 			print_msg_win_state(player1);
 			break;
 
 		case state_player2_win:
 			player2.wins++;
 			player1.losses++;
-
+			putchar('\n');
 			print_msg_win_state(player2);
 			break;
 
@@ -423,6 +433,7 @@ int main()
 
 		if (current_state != state_none)
 		{
+			putchar('\n');
 			print_msg_current_score(player1, player2);
 
 			turn = 1;
@@ -431,6 +442,7 @@ int main()
 			initialize_board(board);
 			swap_player_turn_index(&player1, &player2);
 
+			putchar('\n');
 			game_loop = get_rematch();
 		}
 	} while (game_loop);
