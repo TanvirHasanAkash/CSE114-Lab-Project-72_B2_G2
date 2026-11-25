@@ -131,7 +131,8 @@ void print_game_name()
 
 void print_msg_current_score(const PlayerData player1, const PlayerData player2)
 {
-	printf("%s (%.1f)\tvs\t%s (%.1f)\n",
+	printf(
+		"%s (%.1f)    vs    %s (%.1f)\n",
 		player1.name, calculate_player_score(player1),
 		player2.name, calculate_player_score(player2)
 	);
