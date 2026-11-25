@@ -1,3 +1,4 @@
+#include <conio.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
@@ -448,6 +449,8 @@ int main()
 	} while (game_loop);
 
 	print_summary(player1, player2, match_played);
+
+	getch();
 
 	return 0;
 }
