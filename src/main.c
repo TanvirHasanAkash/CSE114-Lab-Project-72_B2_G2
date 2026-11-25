@@ -215,7 +215,7 @@ void print_board(const char board[BOARD_SIZE][BOARD_SIZE])
 	}
 }
 
-BoardInputData take_board_input(unsigned int turn)
+BoardInputData take_board_input(char board[BOARD_SIZE][BOARD_SIZE], unsigned int turn)
 {
 	BoardInputData data;
 
@@ -265,6 +265,13 @@ BoardInputData take_board_input(unsigned int turn)
 			print_msg_invalid_input();
 			continue;
 		}
+
+		if (board[data.pos_row - 1][data.pos_col - 1] != unmakred)
+		{
+			printf("This cell has been already marked.\nChoose a different one.\n");
+			continue;
+		}
+		
 
 		switch (turn % 2)
 		{
@@ -336,7 +343,7 @@ int main()
 	do {
 		print_msg_current_turn(player1, player2, turn);
 		print_board(board);
-		mark(board, take_board_input(turn));
+		mark(board, take_board_input(board, turn));
 
 		WinState current_state = check_win_state(board, player1, player2);
 
