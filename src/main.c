@@ -39,7 +39,7 @@ typedef struct PlayerData {
 } PlayerData;
 
 
-float calculate_player_score(const PlayerData data)
+double calculate_player_score(const PlayerData data)
 {
 	return data.wins * SCORE_WIN + data.draws * SCORE_DRAW;
 }
@@ -67,7 +67,7 @@ _Bool is_valid_board_input(const BoardInputData input)
 
 WinState check_win_state(const char board[BOARD_SIZE][BOARD_SIZE], const PlayerData player1, const PlayerData player2)
 {
-	WinState state;
+	WinState state = { };
 
 	const _Bool x_row_1 = board[0][0] == marked_x && board[0][1] == marked_x && board[0][2] == marked_x;
 	const _Bool x_row_2 = board[1][0] == marked_x && board[1][1] == marked_x && board[1][2] == marked_x;
@@ -133,7 +133,7 @@ void print_game_name()
 void print_msg_current_score(const PlayerData player1, const PlayerData player2)
 {
 	printf(
-		"%s (%.1f)    vs    %s (%.1f)\n",
+		"%s (%.1lf)    vs    %s (%.1lf)\n",
 		player1.name, calculate_player_score(player1),
 		player2.name, calculate_player_score(player2)
 	);
@@ -247,18 +247,18 @@ void print_summary(const PlayerData player1, const PlayerData player2, const uns
 	printf("============\n");
 	printf("- Total Match Played: %d\n", match_played);
 	printf(
-		"- %s's point:\n    - Win(s): %u\n    - Draw(s): %u\n    - Loss(s): %u\n    - Total point(s): %.1f\n",
+		"- %s's point:\n    - Win(s): %u\n    - Draw(s): %u\n    - Loss(s): %u\n    - Total point(s): %.1lf\n",
 		player1.name, player1.wins, player1.draws, player1.losses, calculate_player_score(player1)
 	);
 	printf(
-		"- %s's point:\n    - Win(s): %u\n    - Draw(s): %u\n    - Loss(s): %u\n    - Total point(s): %.1f\n",
+		"- %s's point:\n    - Win(s): %u\n    - Draw(s): %u\n    - Loss(s): %u\n    - Total point(s): %.1lf\n",
 		player2.name, player2.wins, player2.draws, player2.losses, calculate_player_score(player2)
 	);
 }
 
 BoardInputData take_board_input(char board[BOARD_SIZE][BOARD_SIZE], const unsigned int turn)
 {
-	BoardInputData data;
+	BoardInputData data = { };
 
 	char input[64];
 
@@ -450,7 +450,7 @@ int main()
 
 	print_summary(player1, player2, match_played);
 
-	getch();
+	_getch();
 
 	return 0;
 }
