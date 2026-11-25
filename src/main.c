@@ -419,7 +419,7 @@ int main()
 		case state_draw:
 			player1.draws++;
 			player2.draws++;
-
+			putchar('\n');
 			print_msg_draw_state();
 			break;
 			
