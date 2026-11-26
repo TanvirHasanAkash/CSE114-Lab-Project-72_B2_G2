@@ -308,7 +308,7 @@ BoardInputData take_board_input(char board[BOARD_SIZE][BOARD_SIZE], const unsign
 
 		if (board[data.pos_row - 1][data.pos_col - 1] != unmakred)
 		{
-			printf("This cell has been already marked.\nChoose a different one.\n");
+			printf("This cell has been already marked.\nChoose a different one.\n\n");
 			continue;
 		}
 
